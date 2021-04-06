@@ -10,13 +10,45 @@ const LogOut = () => {
   return CounterComponent;
   
 }
-const loginFunction = () => {
+async function loginFunction() {
   // let key = 'token';
-  // localStorage.removeItem(key)
-  // const rootElement = document.getElementById("root");
-  // console.log(rootElement);
-  return CounterComponent;
+  // Get creds
+  const domain = document.getElementById("domaintigergraph");
+  console.log(domain.getAttribute('value'));
+  const username = ( document.getElementById("usernametigergraph") as HTMLInputElement ).value;
+  console.log(username);
+  const password = ( document.getElementById("passwordtigergraph") as HTMLInputElement ).value ;
+  console.log(password);
+  var formdata = new FormData();
+  formdata.append("username", username);
+  formdata.append("password", password);
+  formdata.append("host", domain.getAttribute('value'));
   
+  const response = await window.fetch('http://127.0.0.1:5000/loginbox',{
+    method: 'POST',
+    body: formdata,
+    redirect: 'follow'
+  }).then(response => response.json())
+  .then(result => {
+    console.log('Success:', result);
+    return result;
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    console.log("Error");
+    
+  });
+  console.log(response);
+  if (response["value"] != null)
+  {
+     // enable algo combo and graphs until login
+      const graphsControler = document.getElementById("graphs");
+      graphsControler.removeAttribute("disabled")
+      graphsControler.innerHTML = '<option value='+response['value']+">"+response['value']+"</option>"
+      const algControler = document.getElementById("algos");
+      algControler.innerHTML = '<option value="AMLSIM">AML Sim</option>'
+      algControler.removeAttribute("disabled")
+  }
 }
 
 function backtoListing()  {
@@ -40,12 +72,19 @@ function loaderAlgo(domain:string,id:string)  {
   tabMachines.classList.remove('active');
   console.log(domain);
   console.log(id);
-  const textDomain = document.getElementById("domain");
+  const textDomain = document.getElementById("domaintigergraph");
   console.log(textDomain);
-  textDomain.setAttribute("text",domain);
-  textDomain.setAttribute("value",domain);
-  textDomain.innerText = domain;
-  textDomain.textContent = domain;
+
+  textDomain.setAttribute("value","https://"+domain);
+
+  
+
+  // disabe algo combo and graphs until login
+  const graphsControler = document.getElementById("graphs");
+  graphsControler.setAttribute("disabled","true")
+  const algControler = document.getElementById("algos");
+  algControler.setAttribute("disabled","true")
+
   
   
 }
@@ -110,8 +149,14 @@ const initialState:State = {
 };
 
 const CloudListingComponent = (): JSX.Element => {
-  // const [state, dispatch] = useReducer(reducer, initialState);
+
+  
   useEffect(() => {
+
+
+
+
+
       async function anyNameFunction() {
       console.log("Component Loaded ...");
       let key = 'token';
@@ -193,7 +238,10 @@ const CloudListingComponent = (): JSX.Element => {
         const rowsElement = document.getElementById("rows");
         ReactDOM.render(rows, rowsElement);
       }
+
+      
       try {
+
             setInterval(async () => {
               console.log("refreshing !!");
               anyNameFunction();
@@ -261,20 +309,20 @@ const CloudListingComponent = (): JSX.Element => {
     <div id="tab2" role="tabpanel" className="tab-pane panel-collapse collapse inactive" aria-labelledby="heading2">
            <div className="training">
               <div className="load-block form-group">
-           			<input type="text" name="host" id="domain" value="" className="form-control"  disabled/>
-           			<input type="text" name="mail"  value="tigergraph" className="form-control"  />
-           			<input type="password" name="password" value="" className="form-control" placeholder="Password" />
+           			<input type="text" name="host" id="domaintigergraph" value="" className="form-control"  disabled/>
+           			<input type="text" name="mail"  id="usernametigergraph"  placeholder="tigergraph" className="form-control"  />
+           			<input type="password" name="password" id="passwordtigergraph"  className="form-control" placeholder="Password" />
            			<a href="#" className="btn btn-info btn-lg" onClick={loginFunction}>Login</a>
            		</div>
-           		<div className="form-group"  >
+           		<div className="form-group" id="AlgoControler" >
            			<h5>Graph</h5>
-           			<select className="form-control">
+           			<select id="graphs" className="form-control">
            				<option>-</option>
            				<option>-</option>
            			</select>
            		
-           			<h5>Algorythm</h5>
-           			<select className="form-control">
+           			<h5>Algorithm</h5>
+           			<select id="algos" className="form-control">
            				<option>-</option>
            				<option>-</option>
            			</select>
@@ -509,49 +557,6 @@ async function opsMachines(action:string,id_machine:string) {
   return listMachines
 }
 
-// export class ListingComps extends ReactWidget {
-
-//   constructor() {
-//     super();
-//     this.addClass('jp-ReactWidget');
-//   }
-
-  // async componentDidMount(): Promise<void> {
-  //   console.log("Component Loaded ...");
-  //   let key = 'token';
-  //   let token = localStorage.getItem(key);
-  //   console.log(token);
-  //   const listMachines = getlistmachines(token)
-  //   console.log(listMachines)
-  //   let rows = listMachines["Result"].map(d => 
-  //     (<tr>
-  //     <td>  <input type="hidden" id="machineID" value="{d.ID}" /> <input type="hidden" id="machineDomain" value="{d.Domain}" /></td>
-  //     <td>{d.Name}</td>
-  //     <td>{d.Tag}</td>
-  //     <td>{d.State}</td>
-  //     <td>{d.ExternalInstanceType}</td>
-  //     <td>{d.CreatedAt}</td>
-  //     <td>{d.UpdatedAt}</td>
-  //     <td className="actions">
-  //       <a href="#"><i className="fa fa-play" aria-hidden="true"></i></a>
-  //       <a href="#"><i className="fa fa-stop" aria-hidden="true"></i></a>
-  //       <a href="#"><i className="fa fa-tasks" aria-hidden="true"></i></a>
-  //     </td>
-  //     </tr>));
-  //     console.log(rows)
-  //     const rowsElement = document.getElementById("rows");
-  //     ReactDOM.render(rows, rowsElement);
-  // }
-
-//   render(): JSX.Element {
-//     // const rootElement = document.getElementById("root");
-//     //   console.log(rootElement);
-//     //   ReactDOM.render(CloudListingComponent, rootElement);
-//     return <CloudListingComponent />;  
-    
-//   }
-
-// }
 
 export class CounterWidget extends ReactWidget {
 
