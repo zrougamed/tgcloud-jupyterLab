@@ -7,24 +7,29 @@ const LogOut = () => {
   localStorage.removeItem(key)
   const rootElement = document.getElementById("root");
   console.log(rootElement);
-  return CounterComponent;
+  return <CounterComponent/>;
   
 }
-async function loginFunction() {
-  // let key = 'token';
-  // Get creds
+
+
+// load the function
+async function loaderFunction() {
   const domain = document.getElementById("domaintigergraph");
   console.log(domain.getAttribute('value'));
   const username = ( document.getElementById("usernametigergraph") as HTMLInputElement ).value;
   console.log(username);
   const password = ( document.getElementById("passwordtigergraph") as HTMLInputElement ).value ;
   console.log(password);
+  const graph = ( document.getElementById("graphs") as HTMLInputElement ).value ;
+  console.log(graph);
   var formdata = new FormData();
   formdata.append("username", username);
   formdata.append("password", password);
   formdata.append("host", domain.getAttribute('value'));
-  
-  const response = await window.fetch('http://127.0.0.1:5000/loginbox',{
+  formdata.append("graph", graph);
+
+
+  const response = await window.fetch('http://tigertool.tigergraph.com:5000/loadtobox',{
     method: 'POST',
     body: formdata,
     redirect: 'follow'
@@ -38,7 +43,55 @@ async function loginFunction() {
     console.log("Error");
     
   });
-  console.log(response);
+  const OutputLive = document.getElementById("outputs");
+  
+  if (response["value"] != null)
+  {
+     // enable algo combo and graphs until login
+      // const graphsControler = document.getElementById("graphs");
+      // graphsControler.removeAttribute("disabled")
+      // graphsControler.innerHTML = '<option value='+response['value']+">"+response['value']+"</option>"
+      // const algControler = document.getElementById("algos");
+      // algControler.innerHTML = '<option value="AMLSIM">AML Sim</option>'
+      // algControler.removeAttribute("disabled")
+      // domain.setAttribute("disabled","true");
+      // document.getElementById("usernametigergraph").setAttribute("disabled","true");
+      // document.getElementById("passwordtigergraph").setAttribute("disabled","true");
+      OutputLive.innerHTML = OutputLive.innerHTML + "<br>" + "Algo Loaded Succesfully !"
+      // OutputLive.innerHTML = OutputLive.innerHTML + "<br>" + "Graphs Found :"
+      // OutputLive.innerHTML = OutputLive.innerHTML + "<br>" + response['value']
+  }
+}
+// login to tgcloud box 
+async function loginFunction() {
+
+  const domain = document.getElementById("domaintigergraph");
+  console.log(domain.getAttribute('value'));
+  const username = ( document.getElementById("usernametigergraph") as HTMLInputElement ).value;
+  console.log(username);
+  const password = ( document.getElementById("passwordtigergraph") as HTMLInputElement ).value ;
+  console.log(password);
+  var formdata = new FormData();
+  formdata.append("username", username);
+  formdata.append("password", password);
+  formdata.append("host", domain.getAttribute('value'));
+  
+  const response = await window.fetch('http://tigertool.tigergraph.com:5000/loginbox',{
+    method: 'POST',
+    body: formdata,
+    redirect: 'follow'
+  }).then(response => response.json())
+  .then(result => {
+    console.log('Success:', result);
+    return result;
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    console.log("Error");
+    
+  });
+  const OutputLive = document.getElementById("outputs");
+  
   if (response["value"] != null)
   {
      // enable algo combo and graphs until login
@@ -48,9 +101,17 @@ async function loginFunction() {
       const algControler = document.getElementById("algos");
       algControler.innerHTML = '<option value="AMLSIM">AML Sim</option>'
       algControler.removeAttribute("disabled")
+      domain.setAttribute("disabled","true");
+      document.getElementById("usernametigergraph").setAttribute("disabled","true");
+      document.getElementById("passwordtigergraph").setAttribute("disabled","true");
+      OutputLive.innerHTML = OutputLive.innerHTML + "<br>" + "Connected Succesfully to tgcloud box !"
+      OutputLive.innerHTML = OutputLive.innerHTML + "<br>" + "Graphs Found :"
+      OutputLive.innerHTML = OutputLive.innerHTML + "<br>" + response['value']
   }
 }
 
+
+// open Listing Tabs
 function backtoListing()  {
   
   const tabAlgos = document.getElementById("tab2");
@@ -62,6 +123,8 @@ function backtoListing()  {
   
 }
 
+
+// open Algo Tabs
 function loaderAlgo(domain:string,id:string)  {
   
   const tabAlgos = document.getElementById("tab2");
@@ -312,7 +375,7 @@ const CloudListingComponent = (): JSX.Element => {
            			<input type="text" name="host" id="domaintigergraph" value="" className="form-control"  disabled/>
            			<input type="text" name="mail"  id="usernametigergraph"  placeholder="tigergraph" className="form-control"  />
            			<input type="password" name="password" id="passwordtigergraph"  className="form-control" placeholder="Password" />
-           			<a href="#" className="btn btn-info btn-lg" onClick={loginFunction}>Login</a>
+           			<a href="#" className="btn btn-info btn-lg" onClick={loginFunction}>Connect</a>
            		</div>
            		<div className="form-group" id="AlgoControler" >
            			<h5>Graph</h5>
@@ -326,12 +389,14 @@ const CloudListingComponent = (): JSX.Element => {
            				<option>-</option>
            				<option>-</option>
            			</select>
-                 <a href="#" className="btn btn-info btn-lg">Load</a>
+                 <a href="#" className="btn btn-info btn-lg" onClick={loaderFunction}>Load</a>
            		</div>
            		
            </div>
            <div className="live-output">
            	<p>Live output</p>
+             <p id="outputs"> 
+             </p>
            </div>
       </div>
   </div>
@@ -373,7 +438,7 @@ const CounterComponent = (): JSX.Element => {
 
     const rootLoader = document.getElementById("Loader");
     rootLoader.classList.add("active");
-    const response = await window.fetch('http://127.0.0.1:5000/login',{
+    const response = await window.fetch('http://tigertool.tigergraph.com:5000/login',{
       method: 'POST',
       body: formdata,
       redirect: 'follow'
@@ -502,7 +567,7 @@ const CounterComponent = (): JSX.Element => {
 async function getlistmachines(token:string) {
   var formdata = new FormData();
   formdata.append("token", token);
-      const listMachines = await window.fetch('http://127.0.0.1:5000/list',{
+      const listMachines = await window.fetch('http://tigertool.tigergraph.com:5000/list',{
         method: 'POST',
         body: formdata,
         redirect: 'follow'
@@ -533,7 +598,7 @@ async function opsMachines(action:string,id_machine:string) {
   formdata.append("token", token);
   formdata.append("id_machine", id_machine);
   formdata.append("action", action);
-      const listMachines = await window.fetch('http://127.0.0.1:5000/ops',{
+      const listMachines = await window.fetch('http://tigertool.tigergraph.com:5000/ops',{
         method: 'POST',
         body: formdata,
         redirect: 'follow'

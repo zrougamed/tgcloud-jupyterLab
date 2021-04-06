@@ -23,6 +23,7 @@
   background: white;
   padding: 1% 5%;
   text-align: left;
+  overflow-y: scroll;
 
 }
 
