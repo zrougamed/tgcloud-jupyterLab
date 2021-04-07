@@ -1,7 +1,7 @@
 {
   "name": "@jupyterlab/tgcloud",
-  "version": "0.3.0",
-  "description": "TigerGraph Cloud Extension for JupyterLab/SageMaker",
+  "version": "0.4.0",
+  "description": "TigerGraph tgcloud jupyterLab/SageMaker Integration",
   "keywords": [
     "jupyter",
     "jupyterlab",
@@ -9,10 +9,10 @@
   ],
   "homepage": "https://github.com/zrougamed/tgcloud-jupyterLab",
   "bugs": {
-    "url": "https://github.com/zrougamed/tgcloud-jupyterLab/issues"
+    "url": "https://github.com/zrougamed/tgcloud-jupyterLab"
   },
   "license": "BSD-3-Clause",
-  "author": "Project Jupyter Contributors",
+  "author": "",
   "files": [
     "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
     "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}"
@@ -27,7 +27,10 @@
   "scripts": {
     "build": "tsc",
     "clean": "rimraf lib && rimraf tsconfig.tsbuildinfo",
-    "link": "jupyter labextension link . --no-build"
+    "link": "jupyter labextension link . --no-build",
+    "tslint": "tslint --fix -c tslint.json --project tsconfig.json \"**/*{.ts,.tsx}\"",
+    "tslint:check": "tslint -c tslint.json --project tsconfig.json \"**/*{.ts,.tsx}\"",
+    "watch": "tsc -w"
   },
   "dependencies": {
     "@jupyterlab/application": "^1.0.0",
