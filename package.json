@@ -44,9 +44,9 @@
     "watch:src": "tsc -w"
   },
   "dependencies": {
-    "@jupyterlab/application": "^3.0.0-rc.15",
-    "@jupyterlab/launcher": "^3.0.0-rc.15",
-    "@jupyterlab/ui-components": "^3.0.0-rc.15"
+    "@jupyterlab/application": "^1.0.0-rc.15",
+    "@jupyterlab/launcher": "^1.0.0-rc.15",
+    "@jupyterlab/ui-components": "^1.0.0-rc.15"
   },
   "devDependencies": {
     "@jupyterlab/builder": "^3.0.0-rc.15",
