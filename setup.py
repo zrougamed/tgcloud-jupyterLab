@@ -13,7 +13,7 @@ import setuptools
 HERE = os.path.abspath(os.path.dirname(__file__))
 
 # The name of the project
-name="jupyterlab_examples_react_widget"
+name="tgcloud-jupyter"
 
 # Get our version
 with open(os.path.join(HERE, 'package.json')) as f:
@@ -32,7 +32,7 @@ package_data_spec = {
     ]
 }
 
-labext_name = "@jupyterlab-examples/react-widget"
+labext_name = "@jupyterlab/tgcloud"
 
 data_files_spec = [
     ("share/jupyter/labextensions/%s" % labext_name, lab_path, "**"),
@@ -61,9 +61,9 @@ with open("README.md", "r") as fh:
 setup_args = dict(
     name=name,
     version=version,
-    url="https://github.com/jupyterlab/extension-examples.git",
-    author="Project Jupyter Contributors",
-    description="Example of using a React Widget in a Jupyterlab extension",
+    url="https://github.com/zrougamed/tgcloud-jupyterLab.git",
+    author="Mohamed Zrouga",
+    description="TigerGraph Cloud Extension for JupyterLab/SageMaker",
     long_description= long_description,
     long_description_content_type="text/markdown",
     cmdclass= cmdclass,

@@ -68,6 +68,11 @@
   ],
   "jupyterlab": {
     "extension": true,
-    "outputDir": "tgcloud-jupyter/labextension"
+    "outputDir": "tgcloud-jupyter/labextension",
+    "_build": {
+      "load": "static/remoteEntry.ea1d697d648cf8e2e9fe.js",
+      "extension": "./extension",
+      "style": "./style"
+    }
   }
 }
