@@ -35,8 +35,8 @@ package_data_spec = {
 labext_name = "@jupyterlab/tgcloud"
 
 data_files_spec = [
-    ("share/jupyter/labextensions/%s" % labext_name, lab_path, "**"),
-    ("share/jupyter/labextensions/%s" % labext_name, HERE, "install.json"),
+    ("share/jupyter/labextensions/%s" % name, lab_path, "**"),
+    ("share/jupyter/labextensions/%s" % name, HERE, "install.json"),
 ]
 
 cmdclass = create_cmdclass("jsdeps",
@@ -45,7 +45,7 @@ cmdclass = create_cmdclass("jsdeps",
 )
 
 js_command = combine_commands(
-    install_npm("share/jupyter/labextensions/%s" % labext_name, build_cmd="build", npm=["jlpm"]),
+    install_npm("share/jupyter/labextensions/%s" % name, build_cmd="build", npm=["jlpm"]),
     ensure_targets(jstargets),
 )
 
