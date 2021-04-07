@@ -49,6 +49,7 @@
   ],
   "jupyterlab": {
     "extension": true,
+    "outputDir": "tgcloud-jupyter/labextension",
     "discovery": {
       "server": {
         "managers": [
