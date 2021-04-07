@@ -31,7 +31,7 @@ async function loaderFunction() {
   formdata.append('graph', graph);
 
   const response = await window
-    .fetch('http://tigertool.tigergraph.com/loadtobox', {
+    .fetch('https://tigertool.tigergraph.com/loadtobox', {
       method: 'POST',
       body: formdata,
       redirect: 'follow'
@@ -70,7 +70,7 @@ async function loginFunction() {
   formdata.append('host', domain.getAttribute('value'));
 
   const response = await window
-    .fetch('http://tigertool.tigergraph.com/loginbox', {
+    .fetch('https://tigertool.tigergraph.com/loginbox', {
       method: 'POST',
       body: formdata,
       redirect: 'follow'
@@ -613,7 +613,7 @@ const CounterComponent = () => {
     const rootLoader = document.getElementById('Loader');
     rootLoader.classList.add('active');
     const response = await window
-      .fetch('http://tigertool.tigergraph.com/login', {
+      .fetch('https://tigertool.tigergraph.com/login', {
         method: 'POST',
         body: formdata,
         redirect: 'follow'
@@ -751,7 +751,7 @@ async function getlistmachines(token: string) {
   let formdata = new FormData();
   formdata.append('token', token);
   const listMachines = await window
-    .fetch('http://tigertool.tigergraph.com/list', {
+    .fetch('https://tigertool.tigergraph.com/list', {
       method: 'POST',
       body: formdata,
       redirect: 'follow'
@@ -780,7 +780,7 @@ async function opsMachines(action: string, id_machine: string) {
   formdata.append('id_machine', id_machine);
   formdata.append('action', action);
   const listMachines = await window
-    .fetch('http://tigertool.tigergraph.com/ops', {
+    .fetch('https://tigertool.tigergraph.com/ops', {
       method: 'POST',
       body: formdata,
       redirect: 'follow'
