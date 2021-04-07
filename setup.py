@@ -63,6 +63,7 @@ setup_args = dict(
     version=version,
     url="https://github.com/zrougamed/tgcloud-jupyterLab.git",
     author="Mohamed Zrouga",
+    author_email="medzrouga@gmail.com",
     description="TigerGraph Cloud Extension for JupyterLab/SageMaker",
     long_description= long_description,
     long_description_content_type="text/markdown",
