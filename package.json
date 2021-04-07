@@ -1,6 +1,6 @@
 {
   "name": "@jupyterlab/tgcloud",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "TigerGraph tgcloud jupyterLab/SageMaker Integration",
   "keywords": [
     "jupyter",
@@ -48,6 +48,33 @@
     "style/*.css"
   ],
   "jupyterlab": {
-    "extension": true
+    "extension": true,
+    "discovery": {
+      "server": {
+        "managers": [
+          "pip"
+        ],
+        "base": {
+          "name": "tgcloud-jupyter"
+        }
+      }
+    }
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "tslint --fix",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true
   }
 }

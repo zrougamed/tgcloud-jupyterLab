@@ -55,6 +55,23 @@ if is_repo:
 else:
     cmdclass["jsdeps"] = skip_if_exists(jstargets, js_command)
 
+
+# ###########
+# def runPackLabextension():
+#     if Path('package.json').is_file():
+#         try:
+#             run(['jlpm', 'build:labextension'])
+#         except CalledProcessError:
+#             pass
+# pack_labext = command_for_func(runPackLabextension)
+
+# cmdclass = create_cmdclass('pack_labext', data_files_spec=data_files_spec)
+# cmdclass['pack_labext'] = pack_labext
+# cmdclass.pop('develop')
+
+# #######
+
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
