@@ -6,8 +6,8 @@ const LogOut = () => {
   let key = 'token';
   localStorage.removeItem(key);
   const rootElement = document.getElementById('root');
-  console.log(rootElement);
-  return <CounterComponent />;
+  ReactDOM.render(<CounterComponent />,rootElement);
+  
 };
 
 // load the function
@@ -17,11 +17,9 @@ async function loaderFunction() {
   const username = (document.getElementById(
     'usernametigergraph'
   ) as HTMLInputElement).value;
-  console.log(username);
   const password = (document.getElementById(
     'passwordtigergraph'
   ) as HTMLInputElement).value;
-  console.log(password);
   const graph = (document.getElementById('graphs') as HTMLInputElement).value;
   const algos = (document.getElementById('algos') as HTMLInputElement).value;
   
@@ -40,7 +38,7 @@ async function loaderFunction() {
     })
     .then(response => response.json())
     .then(result => {
-      console.log('Success:', result);
+      
       return result;
     })
     .catch(error => {
@@ -49,23 +47,26 @@ async function loaderFunction() {
     });
   const OutputLive = document.getElementById('outputs');
 
-  if (response['value'] != null) {
+  if (response['True'] != null) {
     OutputLive.innerHTML =
       OutputLive.innerHTML + '<br>' + 'Algo Loaded Succesfully !';
+  }else{
+    OutputLive.innerHTML =
+      OutputLive.innerHTML + '<br>' + 'Algo Loading Failed !';
   }
 }
 // login to tgcloud box
 async function loginFunction() {
   const domain = document.getElementById('domaintigergraph');
-  console.log(domain.getAttribute('value'));
+  
   const username = (document.getElementById(
     'usernametigergraph'
   ) as HTMLInputElement).value;
-  console.log(username);
+  
   const password = (document.getElementById(
     'passwordtigergraph'
   ) as HTMLInputElement).value;
-  console.log(password);
+  
   let formdata = new FormData();
   formdata.append('username', username);
   formdata.append('password', password);
@@ -79,12 +80,12 @@ async function loginFunction() {
     })
     .then(response => response.json())
     .then(result => {
-      console.log('Success:', result);
+      
       return result;
     })
     .catch(error => {
       console.error('Error:', error);
-      console.log('Error');
+      
     });
   const OutputLive = document.getElementById('outputs');
 
@@ -123,6 +124,13 @@ function backtoListing() {
   const tabMachines = document.getElementById('tab1');
   tabMachines.classList.add('active');
   tabMachines.classList.remove('inactive');
+
+  const tablistindic = document.getElementById("ListingTabIndic");
+  const tabalgoindic = document.getElementById("AlgoTabIndic");
+
+
+  tabalgoindic.classList.remove("active");
+  tablistindic.classList.add("active");
 }
 
 // open Algo Tabs
@@ -133,6 +141,13 @@ function loaderAlgo(domain: string, id: string) {
   const tabMachines = document.getElementById('tab1');
   tabMachines.classList.add('inactive');
   tabMachines.classList.remove('active'); 
+
+
+  const tablistindic = document.getElementById("ListingTabIndic");
+  const tabalgoindic = document.getElementById("AlgoTabIndic");
+
+  tabalgoindic.classList.add("active");
+  tablistindic.classList.remove("active");
   const textDomain = document.getElementById('domaintigergraph');
 
 
@@ -208,12 +223,12 @@ const initialState: State = {
 const CloudListingComponent = () => {
   useEffect(() => {
     async function anyNameFunction() {
-      console.log('Component Loaded ...');
+      
       let key = 'token';
       let token = localStorage.getItem(key);
-      console.log(token);
+      
       const listMachines = await getlistmachines(token);
-      console.log(listMachines);
+      
       let rows = listMachines['Result'].map(function(d) {
         if (d.State == 'terminated') {
           return (
@@ -394,16 +409,16 @@ const CloudListingComponent = () => {
           );
         }
       });
-      console.log(rows);
+      
       const rowsElement = document.getElementById('rows');
       ReactDOM.render(rows, rowsElement);
     }
 
     try {
       setInterval(async () => {
-        console.log('refreshing !!');
+        
         anyNameFunction();
-        console.log('refreshed !!');
+        
       }, 5000);
     } catch (e) {
       console.log(e);
@@ -437,7 +452,7 @@ const CloudListingComponent = () => {
           </a>
         </div>
         <ul className="nav nav-tabs" role="tablist">
-          <li role="presentation" className="active">
+          <li role="presentation" id="ListingTabIndic" className="active">
             <a
               href="#"
               aria-controls="tab1"
@@ -448,7 +463,7 @@ const CloudListingComponent = () => {
               Machines
             </a>
           </li>
-          <li role="presentation">
+          <li id="AlgoTabIndic" role="presentation">
             <a href="#" aria-controls="tab2" role="tab" data-toggle="tab">
               Algo Loader
             </a>
@@ -620,7 +635,7 @@ const CounterComponent = () => {
       })
       .then(response => response.json())
       .then(result => {
-        console.log('Success:', result);
+        
         return result;
       })
       .catch(error => {
@@ -759,7 +774,7 @@ async function getlistmachines(token: string) {
     })
     .then(response => response.json())
     .then(result => {
-      console.log(result);
+      
       if (result['error'] == 401) {
         localStorage.removeItem('token');
         ReactDOM.render(<CounterComponent />);
@@ -788,7 +803,7 @@ async function opsMachines(action: string, id_machine: string) {
     })
     .then(response => response.json())
     .then(result => {
-      console.log(result);
+      
       if (result['error'] == 401) {
         localStorage.removeItem('token');
         ReactDOM.render(<CounterComponent />);
