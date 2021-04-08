@@ -617,7 +617,6 @@ const CounterComponent = () => {
         method: 'POST',
         body: formdata,
         redirect: 'follow'
-        
       })
       .then(response => response.json())
       .then(result => {
