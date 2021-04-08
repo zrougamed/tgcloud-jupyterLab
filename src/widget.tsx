@@ -37,7 +37,10 @@ async function loaderFunction() {
       method: 'POST',
       body: formdata,
       redirect: 'follow',
-      mode: 'no-cors'
+      mode: 'no-cors',
+      headers : new Headers(
+        {"Content-Type": "text/plain",
+         "Accept":"application/json"})
     })
     .then(response => response.json())
     .then(result => {
@@ -77,7 +80,10 @@ async function loginFunction() {
       method: 'POST',
       body: formdata,
       redirect: 'follow',
-      mode: 'no-cors'
+      mode: 'no-cors',
+      headers : new Headers(
+        {"Content-Type": "text/plain",
+         "Accept":"application/json"})
     })
     .then(response => response.json())
     .then(result => {
@@ -619,7 +625,10 @@ const CounterComponent = () => {
         method: 'POST',
         body: formdata,
         redirect: 'follow',
-        mode: 'no-cors'
+        mode: 'no-cors',
+        headers : new Headers(
+          {"Content-Type": "text/plain",
+           "Accept":"application/json"})
       })
       .then(response => response.json())
       .then(result => {
@@ -758,7 +767,10 @@ async function getlistmachines(token: string) {
       method: 'POST',
       body: formdata,
       redirect: 'follow',
-      mode: 'no-cors'
+      mode: 'no-cors',
+      headers : new Headers(
+        {"Content-Type": "text/plain",
+         "Accept":"application/json"})
     })
     .then(response => response.json())
     .then(result => {
@@ -788,7 +800,10 @@ async function opsMachines(action: string, id_machine: string) {
       method: 'POST',
       body: formdata,
       redirect: 'follow',
-      mode: 'no-cors'
+      mode: 'no-cors',
+      headers : new Headers(
+        {"Content-Type": "text/plain",
+         "Accept":"application/json"})
     })
     .then(response => response.json())
     .then(result => {

@@ -1,6 +1,6 @@
 {
   "name": "@jupyterlab/tgcloud",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "TigerGraph tgcloud jupyterLab/SageMaker Integration",
   "keywords": [
     "jupyter",
