@@ -36,11 +36,7 @@ async function loaderFunction() {
     .fetch('https://tigertool.tigergraph.com/loadtobox', {
       method: 'POST',
       body: formdata,
-      redirect: 'follow',
-      mode: 'no-cors',
-      headers : new Headers(
-        {"Content-Type": "text/plain",
-         "Accept":"application/json"})
+      redirect: 'follow'
     })
     .then(response => response.json())
     .then(result => {
@@ -79,11 +75,7 @@ async function loginFunction() {
     .fetch('https://tigertool.tigergraph.com/loginbox', {
       method: 'POST',
       body: formdata,
-      redirect: 'follow',
-      mode: 'no-cors',
-      headers : new Headers(
-        {"Content-Type": "text/plain",
-         "Accept":"application/json"})
+      redirect: 'follow'
     })
     .then(response => response.json())
     .then(result => {
@@ -624,11 +616,8 @@ const CounterComponent = () => {
       .fetch('https://tigertool.tigergraph.com/login', {
         method: 'POST',
         body: formdata,
-        redirect: 'follow',
-        mode: 'no-cors',
-        headers : new Headers(
-          {"Content-Type": "text/plain",
-           "Accept":"application/json"})
+        redirect: 'follow'
+        
       })
       .then(response => response.json())
       .then(result => {
@@ -766,11 +755,8 @@ async function getlistmachines(token: string) {
     .fetch('https://tigertool.tigergraph.com/list', {
       method: 'POST',
       body: formdata,
-      redirect: 'follow',
-      mode: 'no-cors',
-      headers : new Headers(
-        {"Content-Type": "text/plain",
-         "Accept":"application/json"})
+      redirect: 'follow'
+      
     })
     .then(response => response.json())
     .then(result => {
@@ -799,11 +785,7 @@ async function opsMachines(action: string, id_machine: string) {
     .fetch('https://tigertool.tigergraph.com/ops', {
       method: 'POST',
       body: formdata,
-      redirect: 'follow',
-      mode: 'no-cors',
-      headers : new Headers(
-        {"Content-Type": "text/plain",
-         "Accept":"application/json"})
+      redirect: 'follow'
     })
     .then(response => response.json())
     .then(result => {
