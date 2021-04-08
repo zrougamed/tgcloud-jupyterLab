@@ -13,7 +13,7 @@ const LogOut = () => {
 // load the function
 async function loaderFunction() {
   const domain = document.getElementById('domaintigergraph');
-  console.log(domain.getAttribute('value'));
+  
   const username = (document.getElementById(
     'usernametigergraph'
   ) as HTMLInputElement).value;
@@ -23,18 +23,21 @@ async function loaderFunction() {
   ) as HTMLInputElement).value;
   console.log(password);
   const graph = (document.getElementById('graphs') as HTMLInputElement).value;
-  console.log(graph);
+  const algos = (document.getElementById('algos') as HTMLInputElement).value;
+  
   let formdata = new FormData();
   formdata.append('username', username);
   formdata.append('password', password);
   formdata.append('host', domain.getAttribute('value'));
   formdata.append('graph', graph);
+  formdata.append('algo', algos);
 
   const response = await window
     .fetch('https://tigertool.tigergraph.com/loadtobox', {
       method: 'POST',
       body: formdata,
-      redirect: 'follow'
+      redirect: 'follow',
+      mode: 'no-cors'
     })
     .then(response => response.json())
     .then(result => {
@@ -73,7 +76,8 @@ async function loginFunction() {
     .fetch('https://tigertool.tigergraph.com/loginbox', {
       method: 'POST',
       body: formdata,
-      redirect: 'follow'
+      redirect: 'follow',
+      mode: 'no-cors'
     })
     .then(response => response.json())
     .then(result => {
@@ -97,7 +101,7 @@ async function loginFunction() {
       response['value'] +
       '</option>';
     const algControler = document.getElementById('algos');
-    algControler.innerHTML = '<option value="AMLSIM">AML Sim</option>';
+    algControler.innerHTML = response['algos']; //'<option value="AMLSIM">AML Sim</option>';
     algControler.removeAttribute('disabled');
     domain.setAttribute('disabled', 'true');
     document
@@ -130,11 +134,9 @@ function loaderAlgo(domain: string, id: string) {
   tabAlgos.classList.add('active');
   const tabMachines = document.getElementById('tab1');
   tabMachines.classList.add('inactive');
-  tabMachines.classList.remove('active');
-  console.log(domain);
-  console.log(id);
+  tabMachines.classList.remove('active'); 
   const textDomain = document.getElementById('domaintigergraph');
-  console.log(textDomain);
+
 
   textDomain.setAttribute('value', 'https://' + domain);
 
@@ -616,7 +618,8 @@ const CounterComponent = () => {
       .fetch('https://tigertool.tigergraph.com/login', {
         method: 'POST',
         body: formdata,
-        redirect: 'follow'
+        redirect: 'follow',
+        mode: 'no-cors'
       })
       .then(response => response.json())
       .then(result => {
@@ -754,7 +757,8 @@ async function getlistmachines(token: string) {
     .fetch('https://tigertool.tigergraph.com/list', {
       method: 'POST',
       body: formdata,
-      redirect: 'follow'
+      redirect: 'follow',
+      mode: 'no-cors'
     })
     .then(response => response.json())
     .then(result => {
@@ -783,7 +787,8 @@ async function opsMachines(action: string, id_machine: string) {
     .fetch('https://tigertool.tigergraph.com/ops', {
       method: 'POST',
       body: formdata,
-      redirect: 'follow'
+      redirect: 'follow',
+      mode: 'no-cors'
     })
     .then(response => response.json())
     .then(result => {
